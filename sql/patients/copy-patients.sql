@@ -1,8 +1,14 @@
+insert into avalon.account_userprofile 
+(
+id, username,password, is_superuser,is_staff,is_active,pin_code,service_info, sign_pic,
+date_joined, first_name, last_name, email, language, birthdate, gender, weight, phone, current_residence_address, business_address
+)
 SELECT 
+	REPLACE(UUID(),'-',''), concat('user-', p.id), '', 0, 0, 0, '', '', '',
     p.date_add date_joined,
     p.name first_name,
     p.last_name,
-    COALESCE(u.email, c.email) email,
+    COALESCE(u.email, c.email, '') email,
     p.language,
     p.birthday birthdate,
     CASE p.gender
@@ -11,8 +17,9 @@ SELECT
         ELSE 'O'
     END gender,
     a.weight,
-    c.phone phone,
-    c.address address
+    c.phone,
+    c.address,
+    c.address
 FROM
     cliniccore.personal p
         LEFT JOIN
