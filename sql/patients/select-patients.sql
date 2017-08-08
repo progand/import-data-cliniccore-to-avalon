@@ -2,11 +2,17 @@ SELECT
     p.date_add date_joined,
     p.name first_name,
     p.last_name,
-    u.email,
+    COALESCE(u.email, c.email) email,
     p.language,
     p.birthday birthdate,
-    CASE p.gender WHEN 'male' THEN 'M' WHEN 'female' THEN 'F' ELSE 'O' END gender,
-    a.weight
+    CASE p.gender
+        WHEN 'male' THEN 'M'
+        WHEN 'female' THEN 'F'
+        ELSE 'O'
+    END gender,
+    a.weight,
+    c.phone phone,
+    c.address address
 FROM
     cliniccore.personal p
         LEFT JOIN
@@ -25,3 +31,27 @@ FROM
         cliniccore.user
     WHERE
         ban_user = 'no') u ON p.id = u.id_personal
+        LEFT JOIN
+    (SELECT 
+        id_cpatient,
+            MAX(email) email,
+            MAX(phone) phone,
+            MAX(address) address
+    FROM
+        (SELECT 
+        id_cpatient, value email, NULL phone, NULL address
+    FROM
+        cliniccore.contact
+    WHERE
+        type = 'email' UNION SELECT 
+        id_cpatient, NULL email, value phone, NULL address
+    FROM
+        cliniccore.contact
+    WHERE
+        type = 'telephone' UNION SELECT 
+        id_cpatient, NULL email, NULL phone, value address
+    FROM
+        cliniccore.contact
+    WHERE
+        type = 'address') c_computed
+    GROUP BY id_cpatient) c ON p.id = c.id_cpatient
