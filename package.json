@@ -1,10 +1,11 @@
 {
   "name": "import-data-cliniccore-to-avalon",
   "version": "1.0.0",
-  "description": "",
+  "description": "Import data from cliniccore database to avalon database",
   "main": "index.js",
   "scripts": {
-    "start": "tsc index.ts",
+    "start": "npm run build:live",
+    "build:live": "./node_modules/.bin/ts-node ./index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,7 +19,11 @@
   },
   "homepage": "https://github.com/progand/import-data-cliniccore-to-avalon#readme",
   "dependencies": {
-    "promise-mysql": "^3.0.2",
+    "promise-mysql": "^3.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.19",
+    "ts-node": "^3.3.0",
     "typescript": "^2.4.2"
   }
 }
