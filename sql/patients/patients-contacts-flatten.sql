@@ -17,7 +17,17 @@ FROM
     FROM
         cliniccore.contact
     WHERE
-        type = 'telephone' AND LENGTH(value) > 0 UNION SELECT 
+        type = 'telephone'
+            AND value NOT IN (SELECT 
+                value
+            FROM
+                (SELECT 
+                COUNT(id_cpatient) total, type, value
+            FROM
+                cliniccore.contact
+            GROUP BY type , value
+            HAVING total > 1
+            ORDER BY total DESC) c01) UNION SELECT 
         id_cpatient, NULL email, NULL phone, value address
     FROM
         cliniccore.contact
