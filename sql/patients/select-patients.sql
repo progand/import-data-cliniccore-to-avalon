@@ -44,11 +44,14 @@ FROM
         cliniccore.contact
     WHERE
         type = 'email' UNION SELECT 
-        id_cpatient, NULL email, value phone, NULL address
+        id_cpatient,
+            NULL email,
+            REPLACE(REPLACE(REPLACE(REPLACE(value, ' ', ''), '-', ''), '(', ''), ')', '') phone,
+            NULL address
     FROM
         cliniccore.contact
     WHERE
-        type = 'telephone' UNION SELECT 
+        type = 'telephone' AND LENGTH(value) > 0 UNION SELECT 
         id_cpatient, NULL email, NULL phone, value address
     FROM
         cliniccore.contact
