@@ -1,7 +1,7 @@
 SELECT 
     id_cpatient,
     MAX(email) email,
-    MAX(phone) phone,
+    MAX(LEFT(phone, 15)) phone,
     MAX(address) address
 FROM
     (SELECT 
@@ -18,14 +18,16 @@ FROM
         cliniccore.contact
     WHERE
         type = 'telephone'
-            AND value NOT IN (SELECT 
-                value
+            AND REPLACE(REPLACE(REPLACE(REPLACE(value, ' ', ''), '-', ''), '(', ''), ')', '') NOT IN (SELECT 
+                phone
             FROM
                 (SELECT 
-                COUNT(id_cpatient) total, type, value
+                COUNT(id_cpatient) total,
+                    type,
+                    REPLACE(REPLACE(REPLACE(REPLACE(value, ' ', ''), '-', ''), '(', ''), ')', '') phone
             FROM
                 cliniccore.contact
-            GROUP BY type , value
+            GROUP BY type , phone
             HAVING total > 1
             ORDER BY total DESC) c01) UNION SELECT 
         id_cpatient, NULL email, NULL phone, value address
