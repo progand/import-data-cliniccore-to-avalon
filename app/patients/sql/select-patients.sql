@@ -12,7 +12,8 @@ SELECT
     END gender,
     a.weight,
     c.phone phone,
-    c.address address
+    c.address address,
+    p.id import_id
 FROM
     cliniccore.personal p
         LEFT JOIN

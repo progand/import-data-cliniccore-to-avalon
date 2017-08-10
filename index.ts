@@ -1,14 +1,14 @@
 const mysql = require('promise-mysql');
 import { connect, disconnect } from './app/connection';
-import { clearPatients, importPatients } from './app/patients';
+import { removePatients, importPatients } from './app/patients';
 
 connect()
-    .then(clear)
+    .then(removeAllData)
     .then(importPatients)
     .then(disconnect)
     .then(() => process.exit());
 
-export async function clear(conn: any): Promise<void> {
-    await clearPatients(conn);
+export async function removeAllData(conn: any): Promise<void> {
+    await removePatients(conn);
     return conn;
 }

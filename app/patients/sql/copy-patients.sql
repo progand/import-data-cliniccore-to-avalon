@@ -1,7 +1,7 @@
 insert into avalon.account_userprofile 
 (
 id, username,password, is_superuser,is_staff,is_active,pin_code,service_info, sign_pic,
-date_joined, first_name, last_name, email, language, birthdate, gender, weight, phone, current_residence_address, business_address
+date_joined, first_name, last_name, email, language, birthdate, gender, weight, phone, current_residence_address, business_address, import_id
 )
 SELECT 
 	REPLACE(UUID(),'-',''), concat('user-', p.id), '', 0, 0, 0, '', '', '',
@@ -19,7 +19,8 @@ SELECT
     a.weight,
     c.phone,
     c.address,
-    c.address
+    c.address,
+    p.id
 FROM
     cliniccore.personal p
         LEFT JOIN
