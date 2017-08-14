@@ -15,7 +15,6 @@ export async function importEMRTypes(conn: any): Promise<void> {
         .map(({ id, title, related_name }) => `(${id}, now(), now(), '${title}', '${related_name}')`)
         .join();
     const query = `INSERT INTO avalon.general_emrtype (id, create_date, update_date, title, related_name) VALUES ${values}`;
-    console.log(query);
     await conn.query(query);
 
     console.log(`emrtypes import finished.`);

@@ -11,7 +11,6 @@ export async function importInjectionSites(conn: any): Promise<void> {
     console.log(`Importing injection sites...`);
    
     const query = `INSERT INTO avalon.general_injectionsite (id, create_date, update_date, title) select id, now(), now(), injection_name from cliniccore.injection_site`;
-    console.log(query);
     await conn.query(query);
 
     console.log(`injection sites import finished.`);
