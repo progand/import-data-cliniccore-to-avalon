@@ -4,6 +4,7 @@ import { removePatients, importPatients } from './app/patients';
 import { removeEMRTypes, importEMRTypes } from './app/emrTypes';
 import { removeInjectionSites, importInjectionSites } from './app/injectionSites';
 import { removeInjectionWays, importInjectionWays } from './app/injectionWays';
+import { removeDrugs, importDrugs } from './app/drugs';
 
 connect()
     .then(removeAllData)
@@ -11,6 +12,7 @@ connect()
     .then(importEMRTypes)
     .then(importInjectionSites)
     .then(importInjectionWays)
+    .then(importDrugs)
     .then(disconnect)
     .then(() => process.exit());
 
@@ -19,5 +21,6 @@ export async function removeAllData(conn: any): Promise<void> {
     await removeEMRTypes(conn);
     await removeInjectionSites(conn);
     await removeInjectionWays(conn);
+    await removeDrugs(conn);
     return conn;
 }
