@@ -6,6 +6,7 @@ import { removeInjectionSites, importInjectionSites } from './app/injectionSites
 import { removeInjectionWays, importInjectionWays } from './app/injectionWays';
 import { removeDrugs, importDrugs } from './app/drugs';
 import { removeUnits, importUnits } from './app/units';
+import { removeLocalizations, importLocalizations } from './app/localizations';
 
 connect()
     .then(removeAllData)
@@ -15,6 +16,7 @@ connect()
     .then(importInjectionWays)
     .then(importDrugs)
     .then(importUnits)
+    .then(importLocalizations)
     .then(disconnect)
     .then(() => process.exit());
 
@@ -25,5 +27,6 @@ export async function removeAllData(conn: any): Promise<void> {
     await removeInjectionWays(conn);
     await removeDrugs(conn);
     await removeUnits(conn);
+    await removeLocalizations(conn);
     return conn;
 }
