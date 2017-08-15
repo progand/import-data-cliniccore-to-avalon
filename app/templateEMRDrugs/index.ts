@@ -15,7 +15,7 @@ export async function removeTemplateEMRDrugs(conn: any): Promise<void> {
     console.log(`Deleting all data templateEMRDrugs...`);
     // perform deleting here    
     await conn.query(`DELETE FROM avalon.drug_templateemrdrug`);
-    await conn.query(`DELETE FROM avalon.general_procedure where emr_type_id=2`);
+    await conn.query(`DELETE FROM avalon.general_procedure where emr_type_id=${drugEMRTypeId}`);
     console.log(`templateEMRDrugs - all records deleted.`);
     return conn;
 }
