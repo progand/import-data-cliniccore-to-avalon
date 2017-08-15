@@ -5,7 +5,6 @@ export default [
     },
     {
         id: 2,
-        title: 'парентеральний',
-        related_name: 'emr_drug'
+        title: 'парентеральний'
     }
 ];

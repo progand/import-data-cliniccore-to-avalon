@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/progand/import-data-cliniccore-to-avalon#readme",
   "dependencies": {
+    "lodash": "^4.17.4",
     "promise-mysql": "^3.0.2"
   },
   "devDependencies": {
