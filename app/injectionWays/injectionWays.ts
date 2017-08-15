@@ -1,10 +1,13 @@
+export const enteralInjectionWayId = 1;
+export const parenteralInjectionWayId = 2;
+
 export default [
     {
-        id: 1,
+        id: enteralInjectionWayId,
         title: 'ентеральний'
     },
     {
-        id: 2,
+        id: parenteralInjectionWayId,
         title: 'парентеральний'
     }
 ];

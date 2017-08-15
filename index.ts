@@ -8,6 +8,7 @@ import { removeDrugs, importDrugs } from './app/drugs';
 import { removeUnits, importUnits } from './app/units';
 import { removeLocalizations, importLocalizations } from './app/localizations';
 import { removeModalities, importModalities } from './app/modalities';
+import { removeTemplateEMRRadiology, importTemplateEMRRadiology } from './app/templateEMRRadiology';
 import { removeTemplateEMRDrugs, importTemplateEMRDrugs } from './app/templateEMRDrugs';
 import { removeTemplateEMRText, importTemplateEMRText } from './app/templateEMRText';
 
@@ -20,6 +21,7 @@ connect()
     .then(importUnits)
     .then(importLocalizations)
     .then(importModalities)
+    .then(importTemplateEMRRadiology)
     .then(importTemplateEMRDrugs)
     .then(importTemplateEMRText)
     .then(importPatients)
@@ -29,6 +31,7 @@ connect()
 export async function removeAllData(conn: any): Promise<void> {
     await removeTemplateEMRText(conn);
     await removeTemplateEMRDrugs(conn);
+    await removeTemplateEMRRadiology(conn);
     await removePatients(conn);
     await removeEMRTypes(conn);
     await removeInjectionSites(conn);

@@ -1,15 +1,5 @@
-import emrTypes from '../emrTypes/emrTypes';
-import injectionWays from '../injectionWays/injectionWays';
-const _ = require('lodash');
-
-const drugEMRTypeId = _.find(emrTypes, { title: 'emr_drug' }).id;
-if (_.isUndefined(drugEMRTypeId))
-    throw new Error('Cant find emr_drug in /app/emrTypes/emrTypes');
-
-const enteralInjectionWayId = _.find(injectionWays, { title: 'ентеральний' }).id;
-const parenteralInjectionWayId = _.find(injectionWays, { title: 'парентеральний' }).id;
-if (_.isUndefined(enteralInjectionWayId) || _.isUndefined(parenteralInjectionWayId))
-    throw new Error('Cant find injection ways in /app/injectionWays/injectionWays');
+import {drugEMRTypeId} from '../emrTypes/emrTypes';
+import {enteralInjectionWayId, parenteralInjectionWayId} from '../injectionWays/injectionWays';
 
 export async function removeTemplateEMRDrugs(conn: any): Promise<void> {
     console.log(`Deleting all data templateEMRDrugs...`);
