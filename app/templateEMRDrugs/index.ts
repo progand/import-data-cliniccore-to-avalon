@@ -23,7 +23,7 @@ export async function importTemplateEMRDrugs(conn: any): Promise<void> {
     `);
     //and then we add templateemrdrug records
     const templateValues = templateEMRDrugs
-        .map(({ id, title, injection_way_id }) => `(${id%100}, now(), now(), null, injection_way_id, ${id}, null, null, null)`)
+        .map(({ id, title, injection_way_id }) => `(${id%100}, now(), now(), null, ${injection_way_id}, ${id}, null, null, null)`)
         .join();
     await conn.query(`INSERT INTO avalon.drug_templateemrdrug 
         (id, create_date, update_date, drug_id, injection_way_id, procedure_id, unit_dose_id, unit_feed_rate_id, unit_volume_id)
