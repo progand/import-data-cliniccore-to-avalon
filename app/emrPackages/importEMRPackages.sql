@@ -1,5 +1,5 @@
 insert into avalon.general_emrpackage
-(id, create_date, update_date, preliminary_data, package_id, patient_id, creator_id)
+(id, create_date, update_date, preliminary_data, package_id, patient_id, creator_id, import_id)
 SELECT 
     REPLACE(UUID(),'-',''),
     coalesce(r.study_date_time, now()),
@@ -7,7 +7,8 @@ SELECT
     r.referring_description,
     coalesce(r.id_study_description, 13),
     u.id,
-   (select id from avalon.account_userprofile where username='admin' limit 1)
+   (select id from avalon.account_userprofile where username='admin' limit 1),
+    r.id
 FROM
     cliniccore.research r
         LEFT JOIN

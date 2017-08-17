@@ -3,10 +3,10 @@ const fs = require('fs');
 export async function removePatients(conn: any): Promise<void> {
     console.log(`Deleting all data from all tables except admin account...`);
     // perform deleting here
+    await conn.query(`DELETE FROM avalon.account_userprofile where is_superuser!=1`);
     try {
         await conn.query('alter table avalon.account_userprofile drop column import_id');
     } catch (e) { }
-    await conn.query(`DELETE FROM avalon.account_userprofile where is_superuser!=1`);
     console.log(`All records deleted.`);
     return conn;
 }
