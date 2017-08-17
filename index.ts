@@ -12,6 +12,7 @@ import { removeTemplateEMRRadiology, importTemplateEMRRadiology } from './app/te
 import { removeTemplateEMRDrugs, importTemplateEMRDrugs } from './app/templateEMRDrugs';
 import { removeTemplateEMRText, importTemplateEMRText } from './app/templateEMRText';
 import { removePackages, importPackages} from './app/packages';
+import { removeEMRPackages, importEMRPackages} from './app/emrPackages';
 
 connect()
     .then(removeAllData)
@@ -27,10 +28,12 @@ connect()
     .then(importTemplateEMRText)
     .then(importPackages)
     .then(importPatients)
+    .then(importEMRPackages)    
     .then(disconnect)
     .then(() => process.exit());
 
 export async function removeAllData(conn: any): Promise<void> {
+    await removeEMRPackages(conn);
     await removePatients(conn);
     await removePackages(conn);
     await removeTemplateEMRText(conn);

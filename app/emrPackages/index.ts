@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 export async function removeEMRPackages(conn: any): Promise<void> {
     console.log(`Deleting all data emrPackages...`);
     // perform deleting here    
@@ -9,7 +11,7 @@ export async function removeEMRPackages(conn: any): Promise<void> {
 export async function importEMRPackages(conn: any): Promise<void> {
     console.log(`Importing emrPackages...`);
    
-    const query = `INSERT INTO avalon.general_modality (id, create_date, update_date, title) select id, now(), now(), modality_name from cliniccore.modality`;
+    const query = fs.readFileSync('./app/emrPackages/importEMRPackages.sql', 'utf-8');
     await conn.query(query);
 
     console.log(`emrPackages import finished.`);
