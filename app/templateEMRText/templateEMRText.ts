@@ -1,7 +1,9 @@
 import {textEMRTypeId} from '../emrTypes/emrTypes';
 
+export const textProcedureId = 201;
+
 export default {
-    id: 201,
+    id: textProcedureId,
     title: 'Протокол дослідження',
     emrTypeId: textEMRTypeId
 }
