@@ -1,5 +1,5 @@
 import { radiologyEMRTypeId } from '../emrTypes/emrTypes';
-import injectionWays from '../injectionWays/injectionWays';
+import templateEMRRadiology from './templateEMRRadiology';
 
 
 export async function removeTemplateEMRRadiology(conn: any): Promise<void> {
@@ -14,19 +14,18 @@ export async function removeTemplateEMRRadiology(conn: any): Promise<void> {
 export async function importTemplateEMRRadiology(conn: any): Promise<void> {
     console.log(`Importing templateEMRRadiology...`);
     //first we create procedure records
+    const procedureValues = templateEMRRadiology
+        .map(({ id, title }) => `(${id}, now(), now(), '${title}', ${radiologyEMRTypeId})`)
+        .join();
     await conn.query(`INSERT INTO avalon.general_procedure (id, create_date, update_date, title, emr_type_id)
-        SELECT 
-            id, NOW(), NOW(), CONCAT('Радіологія - ', modality_name), ${radiologyEMRTypeId}
-        FROM
-            cliniccore.modality
-    `);
+    VALUES ${procedureValues}`);
     //and then we add templateemrdrug records
+    const templateValues = templateEMRRadiology
+        .map(({ id, title, modalityId }) => `(${id}, now(), now(), ${modalityId}, ${id})`)
+        .join();
     await conn.query(`INSERT INTO avalon.radiology_templateemrradiology 
         (id, create_date, update_date, modality_id, procedure_id)
-        SELECT 
-            id, NOW(), NOW(), id, id
-        FROM
-            cliniccore.modality`);
+        VALUES ${templateValues}`);    
 
     console.log(`templateEMRRadiology import finished.`);
     return conn;
