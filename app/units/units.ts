@@ -1,6 +1,8 @@
+export const mZvUnitId = 1;
+
 export default [
     {
-        id: 1,
+        id: mZvUnitId,
         title: 'мЗв',
         internationalTitle: 'мЗв'
     },

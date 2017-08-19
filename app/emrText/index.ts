@@ -18,7 +18,9 @@ export async function removeEMRText(conn: any): Promise<void> {
 export async function importEMRText(conn: any): Promise<void> {
     console.log(`Importing emrText...`);
 
-    await conn.query('alter table avalon.general_emrgeneral add column import_id int;');
+    try {
+        await conn.query('alter table avalon.general_emrgeneral add column import_id int;');
+    } catch (e) { }
     const insertGeneralQuery = `
     INSERT INTO avalon.general_emrgeneral 
     (id, create_date, update_date, patient_id, creator_id, procedure_id, emr_package_id, import_id)
@@ -36,7 +38,8 @@ export async function importEMRText(conn: any): Promise<void> {
             LEFT JOIN
         avalon.account_userprofile u ON r.id_patient = u.import_id
         LEFT JOIN 
-        avalon.general_emrpackage p on r.id=p.import_id;
+        avalon.general_emrpackage p on r.id=p.import_id
+        WHERE r.check_del != 'yes';
     `;
     console.log(` --- general EMR...`);
     await conn.query(insertGeneralQuery);
@@ -59,7 +62,7 @@ export async function importEMRText(conn: any): Promise<void> {
         avalon.general_emrgeneral g ON r.id = g.import_id
             LEFT JOIN
         cliniccore.research_conclusion c ON r.id = c.idresearch
-        where g.procedure_id=${textProcedureId}
+        where r.check_del != 'yes' and g.procedure_id=${textProcedureId}
     `;
     console.log(` --- text EMR...`);
     await conn.query(insertTextQuery);
