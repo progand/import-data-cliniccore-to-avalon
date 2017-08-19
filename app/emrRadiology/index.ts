@@ -25,9 +25,9 @@ export async function importEMRText(conn: any): Promise<void> {
     console.log(` --- general EMR...`);
     await conn.query(insertGeneralQuery);
 
-    const insertTextQuery = ``;
+    /*const insertTextQuery = ``;
     console.log(` --- radiology EMR...`);
-    await conn.query(insertTextQuery);
+    await conn.query(insertTextQuery);*/
 
     console.log(`emrText import finished.`);
     return conn;

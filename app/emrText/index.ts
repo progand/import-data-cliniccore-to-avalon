@@ -58,7 +58,8 @@ export async function importEMRText(conn: any): Promise<void> {
             LEFT JOIN
         avalon.general_emrgeneral g ON r.id = g.import_id
             LEFT JOIN
-        cliniccore.research_conclusion c ON r.id = c.idresearch;
+        cliniccore.research_conclusion c ON r.id = c.idresearch
+        where g.procedure_id=${textProcedureId}
     `;
     console.log(` --- text EMR...`);
     await conn.query(insertTextQuery);
