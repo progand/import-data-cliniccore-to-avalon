@@ -16,6 +16,7 @@ export async function removeEMRText(conn: any): Promise<void> {
 }
 
 export async function importEMRText(conn: any): Promise<void> {
+    let  queryResult: any = { message: '' };
     console.log(`Importing emrText...`);
 
     try {
@@ -42,7 +43,8 @@ export async function importEMRText(conn: any): Promise<void> {
         WHERE r.check_del != 'yes';
     `;
     console.log(` --- general EMR...`);
-    await conn.query(insertGeneralQuery);
+    queryResult = await conn.query(insertGeneralQuery);;
+    console.log(queryResult.message);
 
     const insertTextQuery = `
     INSERT INTO avalon.text_emrtext 
@@ -64,8 +66,9 @@ export async function importEMRText(conn: any): Promise<void> {
         cliniccore.research_conclusion c ON r.id = c.idresearch
         where r.check_del != 'yes' and g.procedure_id=${textProcedureId}
     `;
-    console.log(` --- text EMR...`);
-    await conn.query(insertTextQuery);
+    console.log(` --- text EMR...`);    
+    queryResult = await conn.query(insertTextQuery);;
+    console.log(queryResult.message);
 
     console.log(`emrText import finished.`);
     return conn;
